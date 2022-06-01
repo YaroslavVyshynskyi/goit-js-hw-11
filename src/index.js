@@ -1,5 +1,7 @@
-import Notiflix from "notiflix";
 import PixabayService from "./js/pixabay-api-service";
+import Notiflix from "notiflix";
+import SimpleLightbox from "simplelightbox";
+import "simplelightbox/dist/simple-lightbox.min.css";
 
 const form = document.querySelector("#search-form");
 const galleryContainer = document.querySelector(".gallery");
@@ -29,7 +31,7 @@ function createCard(hit) {
     const { previewURL, webformatURL, largeImageURL, likes, views, comments, downloads } = hit;
     
     return `<div class="photo-card">
-            <img src="${previewURL}" alt="${webformatURL}" loading="lazy" />
+            <img class = "card-image" src="${largeImageURL}" alt="${webformatURL}" loading="lazy" width = 383 height = 210/>
             <div class="info">
                 <p class="info-item">
                     <b>likes:</b> 

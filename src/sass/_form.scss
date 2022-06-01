@@ -3,6 +3,11 @@
     background: rgb(32, 89, 232);
     padding-top: 10px;
     padding-bottom: 10px;
+    
+    position: sticky;
+    top: 0;
+    // z-index: 100;
+    // // width: 100%;
 }
 
 .search-form {
