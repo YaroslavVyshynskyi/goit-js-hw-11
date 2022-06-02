@@ -8,20 +8,23 @@ const galleryContainer = document.querySelector(".gallery");
 const pixabayService = new PixabayService();
 
 
+
 form.addEventListener("submit", onSerch);
 
 function onSerch(evt) { 
     evt.preventDefault();
+
     console.log(evt.currentTarget.elements.searchQuery.value);
     pixabayService.query = evt.currentTarget.elements.searchQuery.value;
-
-    pixabayService.fetchImages().then(appendImagesMarkup);
+    pixabayService.fetchImages().then(images => {
+        clearGalleryContainer();
+        appendImagesMarkup(images);
+    });
 }
 
 function appendImagesMarkup(hits) {
     
     hits.forEach(hit => {
-    
         galleryContainer.insertAdjacentHTML("beforeend", createCard(hit));
     });
 }
@@ -53,3 +56,9 @@ function createCard(hit) {
         </div>`
     // `<img src="${largeImageURL}" alt="${previewURL}" loading="lazy" />`
 } 
+
+function clearGalleryContainer() {
+    galleryContainer.innerHTML = "";
+}
+
+let gallery = new SimpleLightbox('.gallery-item', { captionDelay: 250 });
