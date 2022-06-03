@@ -2,12 +2,15 @@ import Notiflix from "notiflix";
 export default class PixabayService { 
     constructor() {
         this.searchQuery = "";
+        this.per_page = 40;
+        this.page = 1;
+
     } 
     
     fetchImages() {
 
         const key = "27771595-431aa52f6f585107eea577c49";
-        const url = `https://pixabay.com/api/?key=${key}&q=${this.searchQuery}&image_type=photo&orientation=horizontal&safesearch=false`;
+        const url = `https://pixabay.com/api/?key=${key}&q=${this.searchQuery}&image_type=photo&orientation=horizontal&safesearch=false&per_page=${this.per_page}&page=${this.page}`;
         
         return fetch(url)
             .then(response => {
@@ -17,6 +20,7 @@ export default class PixabayService {
             .then(data => {
                 console.log(data);
                 if (data.hits.length > 0) {
+                    this.page += 1;
                     const totalHits = data.totalHits;
                     Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
                     return data.hits;

@@ -6,8 +6,8 @@
     
     position: sticky;
     top: 0;
-    // z-index: 100;
-    // // width: 100%;
+    z-index: 100;
+    // width: 100%;
 }
 
 .search-form {
@@ -17,3 +17,7 @@
     border-color: yellow;
 }
 
+.load-more {
+    display: flex;
+    margin: 0 auto;
+}
