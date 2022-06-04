@@ -3,20 +3,22 @@ import Notiflix from "notiflix";
 // import SimpleLightbox from "simplelightbox";
 import SimpleLightbox from "simplelightbox/dist/simple-lightbox.esm"
 import "simplelightbox/dist/simple-lightbox.min.css";
+// import createCard from "./js/create-card";
+// import LoadMoreBtn from "./js/load-more-btn";
 
 
 const form = document.querySelector("#search-form");
 const galleryContainer = document.querySelector(".gallery");
+const LoadMoreBtn = document.querySelector(".load-more");
 const pixabayService = new PixabayService();
-const loadMore = document.querySelector(".load-more");
-loadMore.hidden = true;
+
 // let gallery = $('.gallery-item').SimpleLightbox();
 // gallery.refresh();
 // let gallery = new SimpleLightbox('.gallery-item', { captionDelay: 250 }).refresh();
 
 
 form.addEventListener("submit", onSerch);
-loadMore.addEventListener("clock", onLoadMore);
+LoadMoreBtn.addEventListener("clock", onLoadMore);
 
 
 function onSerch(evt) { 
@@ -29,6 +31,12 @@ function onSerch(evt) {
         appendImagesMarkup(images);
     });
 }
+
+function clearGalleryContainer() {
+    galleryContainer.innerHTML = "";
+}
+
+let gallery = new SimpleLightbox('.gallery-item', { captionDelay: 250 });
 
 function onLoadMore() {
     pixabayService.fetchImages().then(appendImagesMarkup);
@@ -70,9 +78,3 @@ function createCard(hit) {
             </a>`
     // `<img src="${largeImageURL}" alt="${previewURL}" loading="lazy" />`
 } 
-
-function clearGalleryContainer() {
-    galleryContainer.innerHTML = "";
-}
-
-let gallery = new SimpleLightbox('.gallery-item', { captionDelay: 250 });
