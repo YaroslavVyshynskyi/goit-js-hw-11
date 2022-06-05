@@ -35,6 +35,8 @@
 
 .info {
     display: flex;
+    justify-content: space-between;
+    padding: 0 15px;
     border-bottom: 1px solid #EEEEEE;
     border-left: 1px solid #EEEEEE;
     border-right: 1px solid #EEEEEE;
@@ -43,5 +45,11 @@
 
 .info-item {
     box-sizing: border-box;
-    text-align: center
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    // b {
+    //     display: block;
+    // }
 }
+

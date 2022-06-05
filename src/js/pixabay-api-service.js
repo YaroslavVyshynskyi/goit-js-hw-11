@@ -23,7 +23,6 @@ export default class PixabayService {
                 console.log(data);
                 if (data.hits.length > 0) {
                     this.incrementPage();
-
                     const totalHits = data.totalHits;
                     Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
                     return data.hits;

@@ -1,7 +1,7 @@
 import PixabayService from "./js/pixabay-api-service";
 import Notiflix from "notiflix";
-// import SimpleLightbox from "simplelightbox";
-import SimpleLightbox from "simplelightbox/dist/simple-lightbox.esm"
+import SimpleLightbox from "simplelightbox";
+// import SimpleLightbox from "simplelightbox/dist/simple-lightbox.esm"
 import "simplelightbox/dist/simple-lightbox.min.css";
 // import createCard from "./js/create-card";
 // import LoadMoreBtn from "./js/load-more-btn";
@@ -9,38 +9,58 @@ import "simplelightbox/dist/simple-lightbox.min.css";
 
 const form = document.querySelector("#search-form");
 const galleryContainer = document.querySelector(".gallery");
-const LoadMoreBtn = document.querySelector(".load-more");
+const loadMoreBtn = document.querySelector(".load-more");
 const pixabayService = new PixabayService();
 
 // let gallery = $('.gallery-item').SimpleLightbox();
 // gallery.refresh();
 // let gallery = new SimpleLightbox('.gallery-item', { captionDelay: 250 }).refresh();
+let gallery = new SimpleLightbox('.gallery-item', { captionDelay: 250 });
 
 
 form.addEventListener("submit", onSerch);
-LoadMoreBtn.addEventListener("clock", onLoadMore);
+loadMoreBtn.addEventListener("click", fetchImages);
 
 
 function onSerch(evt) { 
     evt.preventDefault();
 
-    console.log(evt.currentTarget.elements.searchQuery.value);
     pixabayService.query = evt.currentTarget.elements.searchQuery.value;
-    pixabayService.fetchImages().then(images => {
-        clearGalleryContainer();
-        appendImagesMarkup(images);
-    });
+    clearGalleryContainer();
+    fetchImages();
 }
+
+function fetchImages() { 
+    loadMoreBtn.classList.add("is-hidden");
+    pixabayService.fetchImages().then(images => {
+        appendImagesMarkup(images);
+        const galleryItemsCount = document.querySelectorAll(".gallery a").length;
+        if (galleryItemsCount >= images.total) {
+            loadMoreBtn.classList.remove("is-hidden");
+             Notiflix.Notify.warning("Sorry, there are no images matching your search query. Please try again.");
+        }
+        loadMoreBtn.classList.remove("is-hidden");
+    })
+        .then(() => {
+            const { height: cardHeight } = document
+                .querySelector(".gallery")
+                .firstElementChild.getBoundingClientRect();
+
+            window.scrollBy({
+                top: cardHeight * 2,
+                behavior: "smooth",
+            });
+        });
+            
+}    
 
 function clearGalleryContainer() {
     galleryContainer.innerHTML = "";
 }
 
-let gallery = new SimpleLightbox('.gallery-item', { captionDelay: 250 });
-
-function onLoadMore() {
-    pixabayService.fetchImages().then(appendImagesMarkup);
-}
+// function onLoadMore() {
+//     pixabayService.fetchImages().then(appendImagesMarkup);
+// }
 
 function appendImagesMarkup(hits) {
     
@@ -55,7 +75,7 @@ function createCard(hit) {
     
     return `<a class="gallery-item" href="${largeImageURL}">
                 <div class="photo-card">
-                    <img class = "card-image" src="${webformatURL}" alt="${tags}" loading="lazy" />
+                    <img class = "card-image" src="${webformatURL}" alt="${tags}" " />
                     <div class="info">
                         <p class="info-item">
                             <b>likes:</b> 
@@ -76,5 +96,15 @@ function createCard(hit) {
                     </div>
                 </div>
             </a>`
-    // `<img src="${largeImageURL}" alt="${previewURL}" loading="lazy" />`
+    // loading="lazy`
 } 
+
+// const { height: cardHeight } = document
+//   .querySelector(".gallery")
+//   .firstElementChild.getBoundingClientRect();
+
+// window.scrollBy({
+//   top: cardHeight * 2,
+//   behavior: "smooth",
+// });
+
