@@ -37,7 +37,7 @@ function fetchImages() {
         const galleryItemsCount = document.querySelectorAll(".gallery a").length;
         if (galleryItemsCount >= images.total) {
             loadMoreBtn.classList.remove("is-hidden");
-             Notiflix.Notify.warning("Sorry, there are no images matching your search query. Please try again.");
+            Notiflix.Notify.warning("Sorry, there are no images matching your search query. Please try again.");
         }
         loadMoreBtn.classList.remove("is-hidden");
     })
@@ -58,10 +58,6 @@ function clearGalleryContainer() {
     galleryContainer.innerHTML = "";
 }
 
-// function onLoadMore() {
-//     pixabayService.fetchImages().then(appendImagesMarkup);
-// }
-
 function appendImagesMarkup(hits) {
     
     hits.forEach(hit => {
@@ -75,7 +71,7 @@ function createCard(hit) {
     
     return `<a class="gallery-item" href="${largeImageURL}">
                 <div class="photo-card">
-                    <img class = "card-image" src="${webformatURL}" alt="${tags}" " />
+                    <img class = "card-image" src="${webformatURL}" alt="${tags}" loading="lazy" />
                     <div class="info">
                         <p class="info-item">
                             <b>likes:</b> 
