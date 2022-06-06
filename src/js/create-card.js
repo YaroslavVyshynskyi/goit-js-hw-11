@@ -1,11 +1,8 @@
-export default createCard(hit);
-
-function createCard(hit) { 
+export default function createCard(hit) { 
     
-    const { previewURL, webformatURL, largeImageURL, likes, views, comments, downloads, id } = hit;
+    const { webformatURL, largeImageURL, likes, views, comments, downloads, id } = hit;
     
-    return
-        `<a class="gallery-item" href="${largeImageURL}">
+    return `<a class="gallery-item" href="${largeImageURL}">
             <div class="photo-card">
                 <img class = "card-image" src="${webformatURL}" alt="${id}" loading="lazy"/>
                 <div class="info">

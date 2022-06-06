@@ -22,15 +22,10 @@
     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
 }
 
-.photo-card {
-
-}
-
 .card-image {
     height: 210px;
     width: 100%;
     object-fit: cover;
-    // transition: transform var(--animation-duration) var(--timing-function);
 }
 
 .info {
@@ -48,8 +43,5 @@
     text-align: center;
     display: flex;
     flex-direction: column;
-    // b {
-    //     display: block;
-    // }
 }
 

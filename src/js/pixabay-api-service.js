@@ -1,7 +1,7 @@
 import Notiflix from "notiflix";
 
 const KEY = "27771595-431aa52f6f585107eea577c49"
-const URL = "https://pixabay.com/api/"
+const PIXABAY_URL = "https://pixabay.com/api/"
 export default class PixabayService { 
     constructor() {
         this.searchQuery = "";
@@ -10,9 +10,7 @@ export default class PixabayService {
     } 
     
     fetchImages() {
-
-        const key = "27771595-431aa52f6f585107eea577c49";
-        const url = `${URL}?key=${KEY}&q=${this.searchQuery}&image_type=photo&orientation=horizontal&safesearch=false&per_page=${this.per_page}&page=${this.page}`;
+        const url = `${PIXABAY_URL}?key=${KEY}&q=${this.searchQuery}&image_type=photo&orientation=horizontal&safesearch=false&per_page=${this.per_page}&page=${this.page}`;
         
         return fetch(url)
             .then(response => {
@@ -20,14 +18,16 @@ export default class PixabayService {
                 throw new Error();
             })
             .then(data => {
-                console.log(data);
                 if (data.hits.length > 0) {
                     this.incrementPage();
                     const totalHits = data.totalHits;
+                    this.totalHits = totalHits;
                     Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
                     return data.hits;
                 }
+
                 Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.");
+                return [];
             });
     }
 
